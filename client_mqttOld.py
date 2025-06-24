@@ -6,7 +6,9 @@ from client import Client  # seu código existente
 from logger_utils import setup_logger, get_host_info
 
 CLIENT_ID = int(os.getenv("CLIENT_ID", 0))
-BROKER_IP = os.getenv("BROKER_IP", "192.168.1.100")
+#BROKER_IP = os.getenv("BROKER_IP", "192.168.1.100")
+BROKER_IP = os.getenv("BROKER_IP", "localhost") # pra não ter brona ao rodar local.
+
 PARAMS_TOPIC = f"fed/client/{CLIENT_ID}/params"
 GLOBAL_TOPIC = "fed/global/params"
 
@@ -28,7 +30,7 @@ mqtt_client.loop_start()
 
 # Aguarda parâmetros globais iniciais
 while not os.path.exists("global_parameters.pkl"):
-    logger.info("⏳ Aguardando parâmetros globais...")
+    logger.info("Aguardando parâmetros globais...")
     time.sleep(2)
 
 with open("global_parameters.pkl", "rb") as f:
